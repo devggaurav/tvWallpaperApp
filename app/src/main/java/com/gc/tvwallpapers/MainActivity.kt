@@ -14,6 +14,7 @@ import androidx.tv.material3.Surface
 import com.gc.tvwallpapers.ui.theme.TvWallpapersTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalTvMaterial3Api::class)
