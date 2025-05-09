@@ -4,14 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gc.tvwallpapers.network.Resource
 import com.gc.tvwallpapers.network.data.PixabayImage
+import com.gc.tvwallpapers.network.data.PixabayRepository
 import com.gc.tvwallpapers.network.usecase.SearchImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 //
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val searchImagesUseCase: SearchImagesUseCase
+    private val repository: PixabayRepository
 ) : ViewModel() {
 
     private val _searchState = MutableStateFlow<SearchState>(SearchState.Initial)
@@ -40,7 +41,7 @@ class MainViewModel @Inject constructor(
 
     fun searchImages(query: String = _searchQuery.value) {
         viewModelScope.launch {
-            searchImagesUseCase(query).onEach { result ->
+            repository.searchImages(query).onEach { result ->
                 _searchState.value = when (result) {
                     is Resource.Loading -> SearchState.Loading
                     is Resource.Success -> SearchState.Success(result.data.images)
