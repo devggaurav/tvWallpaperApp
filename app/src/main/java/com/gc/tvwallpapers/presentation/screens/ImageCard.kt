@@ -21,6 +21,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.gc.tvwallpapers.R
 import com.gc.tvwallpapers.network.data.PixabayImage
 
 @Composable
@@ -38,8 +39,10 @@ fun ImageCard(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(image.largeImageURL)
                     .crossfade(true)
-                    .placeholder(com.gc.tvwallpapers.R.drawable)
-                    .error(R.drawable.error_image)
+                    .placeholder(
+                        com.gc.tvwallpapers.R.mipmap.ic_launcher
+                    )
+                    .error(R.mipmap.ic_launcher)
                     .build(),
                 contentDescription = "Image by ${image.user}",
                 contentScale = ContentScale.Crop,
