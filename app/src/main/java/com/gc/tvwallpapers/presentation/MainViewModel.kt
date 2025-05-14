@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
     private val _searchState = MutableStateFlow<SearchState>(SearchState.Initial)
     val searchState: StateFlow<SearchState> = _searchState
 
-    private val _searchQuery = MutableStateFlow("yellow flowers")
+    private val _searchQuery = MutableStateFlow("Amoled")
     val searchQuery: StateFlow<String> = _searchQuery
 
     init {
