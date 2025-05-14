@@ -23,7 +23,7 @@ class PixabayRepositoryImpl @Inject constructor(
             emit(Resource.Loading)
 
             val response = pixabayApiService.searchImages(
-                apiKey = "",  //Add Api key
+                apiKey = "-4b2f7f9bd1ac7ce7067f5b354",  //Test api key
                 query = query
             )
 
