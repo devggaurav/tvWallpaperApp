@@ -115,13 +115,14 @@ fun PixabayScreen(
 
 
             Button(
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
                 shape = androidx.tv.material3.ButtonDefaults.shape(shape = RoundedCornerShape(16)),
                 onClick = {
                     viewModel.searchImages()
                     focusManager.clearFocus()
                     Toast.makeText(context,"I am clicked",Toast.LENGTH_SHORT).show()
-                }
+                },
+                enabled = true
             ) {
                 Text("Search")
             }
