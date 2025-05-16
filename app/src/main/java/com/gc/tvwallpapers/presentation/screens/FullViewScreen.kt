@@ -1,5 +1,6 @@
 package com.gc.tvwallpapers.presentation.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -55,6 +57,8 @@ fun PixabayScreen(
     val searchState by viewModel.searchState.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+
 
     Column(
         modifier = Modifier
@@ -62,18 +66,17 @@ fun PixabayScreen(
             .padding(16.dp)
     ) {
         // Search Bar
-        Row(
+        Column (
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
 
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { viewModel.updateSearchQuery(it) },
-                modifier = Modifier
-                    .weight(.8f)
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
+
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 placeholder = {
                     Text(
@@ -117,6 +120,7 @@ fun PixabayScreen(
                 onClick = {
                     viewModel.searchImages()
                     focusManager.clearFocus()
+                    Toast.makeText(context,"I am clicked",Toast.LENGTH_SHORT).show()
                 }
             ) {
                 Text("Search")
