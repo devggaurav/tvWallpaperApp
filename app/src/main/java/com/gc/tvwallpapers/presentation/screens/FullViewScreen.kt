@@ -1,5 +1,6 @@
 package com.gc.tvwallpapers.presentation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,10 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -26,12 +29,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.Button
+import androidx.tv.material3.ButtonShape
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.gc.tvwallpapers.presentation.MainViewModel
@@ -41,7 +46,6 @@ import com.gc.tvwallpapers.presentation.MainViewModel
 // Created by Code For Android on 02/05/25.
 // Copyright (c) 2025 CFA. All rights reserved.
 //
-
 
 
 @Composable
@@ -64,16 +68,24 @@ fun PixabayScreen(
         ) {
 
 
-
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { viewModel.updateSearchQuery(it) },
                 modifier = Modifier
+                    .weight(.8f)
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("Search images...") },
+                placeholder = {
+                    Text(
+                        "Search images...",
+                        color = Color.White
+                    )
+                },
                 singleLine = true,
-                textStyle = MaterialTheme.typography.bodyMedium,
+                textStyle = TextStyle(
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                    color = Color.White
+                ),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -100,6 +112,8 @@ fun PixabayScreen(
 
 
             Button(
+                modifier = Modifier,
+                shape = androidx.tv.material3.ButtonDefaults.shape(shape = RoundedCornerShape(16)),
                 onClick = {
                     viewModel.searchImages()
                     focusManager.clearFocus()
@@ -107,6 +121,8 @@ fun PixabayScreen(
             ) {
                 Text("Search")
             }
+
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -116,6 +132,7 @@ fun PixabayScreen(
             is MainViewModel.SearchState.Initial -> {
                 // No content yet, show nothing or initial message
             }
+
             is MainViewModel.SearchState.Loading -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -124,6 +141,7 @@ fun PixabayScreen(
                     // Add Progress Indicator
                 }
             }
+
             is MainViewModel.SearchState.Success -> {
                 val images = (searchState as MainViewModel.SearchState.Success).images
                 LazyVerticalGrid(
@@ -139,6 +157,7 @@ fun PixabayScreen(
                     }
                 }
             }
+
             is MainViewModel.SearchState.Error -> {
                 val errorMessage = (searchState as MainViewModel.SearchState.Error).message
                 Box(
